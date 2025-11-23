@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>NeoStudy Dashboard</title>
+
+<style>
+    body {
+        background: radial-gradient(circle at top, #0d1b2a, #000);
+        font-family: 'Segoe UI', sans-serif;
+        color: #dce3f1;
+        margin: 0;
+        padding: 0;
+    }
+
+    h1 {
+        text-align: center;
+        padding: 25px;
+        font-size: 35px;
+        color: #90caf9;
+        text-shadow: 0 0 10px #2196f3;
+    }
+
+    .section-buttons {
+        width: 100%;
+        text-align: center;
+        margin-top: 10px;
+    }
+
+    .section-buttons h3 {
+        margin-bottom: 10px;
+        color: #4dabf7;
+    }
+
+    .sub-btn {
+        display: inline-block;
+        margin: 6px;
+        padding: 10px 22px;
+        border-radius: 30px;
+        font-size: 15px;
+        border: none;
+        cursor: pointer;
+        background: linear-gradient(45deg, #007bff, #4dabf7);
+        color: white;
+        transition: 0.2s ease;
+        box-shadow: 0 0 10px rgba(0, 120, 255, 0.3);
+    }
+
+    .sub-btn:hover {
+        transform: scale(1.07);
+        box-shadow: 0 0 15px rgba(0, 150, 255, 0.6);
+    }
+
+    .container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        gap: 20px;
+        padding: 20px;
+    }
+
+    .card {
+        background: rgba(20, 25, 35, 0.9);
+        border-radius: 18px;
+        padding: 25px;
+        width: 100%;
+        box-shadow: 0 0 20px rgba(0, 120, 255, 0.25);
+        border: 1px solid rgba(255,255,255,0.05);
+        backdrop-filter: blur(10px);
+    }
+
+    .progress-bar {
+        background: #334;
+        border-radius: 10px;
+        height: 10px;
+        margin-top: 8px;
+    }
+
+    .progress-fill {
+        height: 100%;
+        width: 30%;
+        background: linear-gradient(45deg, #007bff,#4dabf7);
+        border-radius: 10px;
+    }
+
+    textarea {
+        width: 100%;
+        height: 140px;
+        background: #0f1220;
+        color: #fff;
+        padding: 12px;
+        border-radius: 12px;
+        border: 1px solid #3b4251;
+        outline: none;
+        font-size: 15px;
+    }
+
+    .btn {
+        margin-top: 15px;
+        padding: 10px 20px;
+        background: linear-gradient(45deg, #007bff, #4dabf7);
+        color: white;
+        border: none;
+        border-radius: 12px;
+        cursor: pointer;
+        font-size: 15px;
+        transition: 0.2s ease;
+    }
+
+    .btn:hover {
+        transform: scale(1.05);
+        box-shadow: 0 0 10px rgba(0, 120, 255, 0.5);
+    }
+
+    .answer-input {
+        width: 100%;
+        height: 120px;
+        background: #0f1220;
+        color: white;
+        border-radius: 12px;
+        border: 1px solid #334;
+        padding: 12px;
+        margin-top: 10px;
+    }
+</style>
+</head>
+
+<body>
+
+<h1>NeoStudy Dashboard</h1>
+
+<!-- ===================== SEBI SECTION BUTTONS ===================== -->
+<div class="section-buttons">
+    <h3>SEBI Section</h3>
+    <button class="sub-btn" onclick="selectSub('sebi_quant')">Quant</button>
+    <button class="sub-btn" onclick="selectSub('sebi_reason')">Reasoning</button>
+    <button class="sub-btn" onclick="selectSub('sebi_eng')">English</button>
+    <button class="sub-btn" onclick="selectSub('sebi_ga')">General Awareness</button>
+</div>
+
+<!-- ===================== IT SECTION BUTTONS ===================== -->
+<div class="section-buttons">
+    <h3>IT Section</h3>
+    <button class="sub-btn" onclick="selectSub('it_captain')">Captain+</button>
+    <button class="sub-btn" onclick="selectSub('it_n')">N++</button>
+    <button class="sub-btn" onclick="selectSub('it_cyber')">Cyber Security</button>
+    <button class="sub-btn" onclick="selectSub('it_vm')">Virtualization</button>
+</div>
+
+<div class="container">
+
+    <!-- SEBI PROGRESS CARD -->
+    <div class="card">
+        <h2>SEBI Progress</h2>
+
+        <p>Quant — <span style="color:red;">Not Started</span></p>
+        <p>Reasoning — <span style="color:#4dabf7;">In Progress</span></p>
+        <p>English — <span style="color:yellow;">Pending</span></p>
+        <p>General Awareness — <span style="color:#4caf50;">Completed</span></p>
+
+        <p>Overall Progress</p>
+        <div class="progress-bar"><div class="progress-fill"></div></div>
+    </div>
+
+    <!-- IT PROGRESS CARD -->
+    <div class="card">
+        <h2>IT Progress</h2>
+
+        <p>Captain+ — <span style="color:red;">Not Started</span></p>
+        <p>N++ — <span style="color:#4dabf7;">In Progress</span></p>
+        <p>Cyber Security — <span style="color:yellow;">Pending</span></p>
+        <p>Virtualization — <span style="color:#4caf50;">Completed</span></p>
+
+        <p>Overall Progress</p>
+        <div class="progress-bar"><div class="progress-fill" style="width:40%"></div></div>
+    </div>
+
+    <!-- NOTES -->
+    <div class="card">
+        <h2>Your Notes</h2>
+        <textarea id="notesBox" placeholder="Write your notes here..."></textarea>
+        <button class="btn" onclick="saveNotes()">Save Notes</button>
+    </div>
+
+    <!-- QUIZ -->
+    <div class="card">
+        <h2>Quick Quiz</h2>
+        <p id="quizQuestion" style="color:yellow;">Select a subsection to start</p>
+
+        <textarea id="answerBox" class="answer-input" placeholder="Write your answer here..."></textarea>
+
+        <button class="btn" onclick="newQuestion()">New Question</button>
+    </div>
+
+</div>
+
+<script>
+    const questionSets = {
+
+        sebi_quant: [
+            "What is Simple Interest?",
+            "Define Compound Interest.",
+            "Explain Profit & Loss formula.",
+            "What is Ratio & Proportion?"
+        ],
+
+        sebi_reason: [
+            "What is a Syllogism?",
+            "Define Blood Relation concept.",
+            "Explain Coding-Decoding.",
+            "What is Direction Sense?"
+        ],
+
+        sebi_eng: [
+            "Define Noun with example.",
+            "What is a Clause?",
+            "Explain Active & Passive Voice.",
+            "Define Adjective."
+        ],
+
+        sebi_ga: [
+            "Who is the current RBI Governor?",
+            "What is GDP?",
+            "Define Inflation.",
+            "What is Fiscal Deficit?"
+        ],
+
+        it_captain: [
+            "What is an Operating System?",
+            "Define Kernel.",
+            "Explain Process vs Thread.",
+            "What is BIOS?"
+        ],
+
+        it_n: [
+            "What is Computer Network?",
+            "Define LAN, WAN, MAN.",
+            "What is an IP Address?",
+            "Explain Subnet Mask."
+        ],
+
+        it_cyber: [
+            "Define Cyber Security.",
+            "What is Phishing?",
+            "Explain Malware types.",
+            "What is Encryption?"
+        ],
+
+        it_vm: [
+            "What is Virtual Machine?",
+            "Define Hypervisor.",
+            "What is VMware?",
+            "Explain Virtualization Layers."
+        ]
+    };
+
+    let currentSet = null;
+
+    function selectSub(sub) {
+        currentSet = questionSets[sub];
+        document.getElementById("quizQuestion").innerText =
+            "New subsection selected → Click 'New Question'";
+        document.getElementById("answerBox").value = "";
+    }
+
+    function newQuestion() {
+        if (!currentSet) {
+            alert("Please select a subsection first!");
+            return;
+        }
+        let randomIndex = Math.floor(Math.random() * currentSet.length);
+        document.getElementById("quizQuestion").innerText = currentSet[randomIndex];
+        document.getElementById("answerBox").value = "";
+    }
+
+    function saveNotes() {
+        let notes = document.getElementById("notesBox").value;
+        localStorage.setItem("userNotes", notes);
+        alert("Notes Saved Successfully!");
+    }
+
+    window.onload = () => {
+        let savedNotes = localStorage.getItem("userNotes");
+        if (savedNotes) {
+            document.getElementById("notesBox").value = savedNotes;
+        }
+    };
+</script>
+
+</body>
+</html>
